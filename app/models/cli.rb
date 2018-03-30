@@ -15,7 +15,7 @@ def person(gender, country_of_origin)
                 \  _  /
                  \___/
              .---:   :---.
-            /   '+country_of_origin+'\
+            /     '+country_of_origin+'
            /  |####|####|  \
           /  /\ ####### /\  \
          (  \  \  ###  /  /  )
@@ -259,6 +259,8 @@ def pilotBio(name)
   Age: #{bioName.age}
   Missions: "
   bioName.missions.each{|m| m.missionInfo}
+  puts " "
+  puts "\tTotal Distance Traveled: #{bioName.missions.sum{|mission| mission.total_distance}}" 
   profile(name)
 end
 
@@ -268,8 +270,11 @@ def profile(option)
 end
 
 def create_pilot
-  puts "What is the name of the pilot?"
+  puts "What is the name of the pilot? Or hit 1 to exit."
   pilot_name = gets.chomp
+  if pilot_name == "1"
+    menu
+  end
   puts "What is the country of origin?"
   coe = gets.chomp
   puts "What is the pilot's age?"
@@ -283,8 +288,11 @@ end
 
 def fire
   puts Pilot.all.map{|i| i.name}
-  puts "Who do you want to fire?"
+  puts "Who do you want to fire? Or hit 1 to exit."
   input = gets.chomp.capitalize
+  if input == "1"
+    menu
+  end
   pilot = Pilot.find_by(name: input)
   pilot.delete
   menu
