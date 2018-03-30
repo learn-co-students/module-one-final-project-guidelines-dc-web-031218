@@ -216,6 +216,9 @@ def handle_tasks(num)
     option = gets.chomp.capitalize
     if option == "1"
       menu
+    elsif !Pilot.all.map{|pilot| pilot.name}.include?(option)
+      puts "Sorry, that name isn't in the list."
+      handle_tasks(1)
     else
       system "clear"
       pilotBio(option)
@@ -232,6 +235,9 @@ def handle_tasks(num)
     option = gets.chomp
     if option == "1"
       menu
+    elsif !Spacecraft.all.map{|space| space.name}.include?(option)
+      puts "Sorry, that isn't an option."
+      handle_tasks(3)
     else
       spaceImage(option)
     end
@@ -312,9 +318,17 @@ def spaceImage(option)
 end
 
 def update
+    puts "\n"
     puts Pilot.all.map{|i| i.name}
-    puts "Whose information do you want to update?"
+    puts "Whose information do you want to update? Or hit 1 to exit."
     user_input = gets.chomp.capitalize
+    if user_input == "1"
+      menu
+    elsif !Pilot.all.map{|i| i.name}.include?(user_input)
+        puts "Sorry, #{user_input} isn't an option.\n"
+        puts "\n"
+        update
+    end
     pilot = Pilot.find_by(name: user_input)
     puts "What information do you want to update?
     Age
