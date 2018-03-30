@@ -176,7 +176,7 @@ def greeting
 end
 
 def menu
-  available_choices = [1,2,3,4,5,6,7]
+  available_choices = [1,2,3,4,5,6,7,8]
   choice = 0
   while !available_choices.include?(choice)
     display_options
@@ -195,10 +195,11 @@ def display_list
   puts "\n    1. See our list of Pilots
     2. View our Missions
     3. See our Spacecrafts
-    4. Hire a pilot
-    5. Fire a pilot
-    6. Update
-    7. Exit\n"
+    4. Hire a Pilot
+    5. Fire a Pilot
+    6. Update Pilot Info
+    7. Watch Shuttle Launch
+    8. Exit\n"
 end
 
 def handle_tasks(num)
@@ -211,6 +212,7 @@ def handle_tasks(num)
       menu
     else
       pilotBio(option)
+      menu
     end
   when 2
     puts "\n"
@@ -219,7 +221,7 @@ def handle_tasks(num)
   when 3
     puts Spacecraft.all.map{|i| i.stdInfo}
     puts "Type name of spacecraft to see in action or type 1 go back to main screen."
-    option = gets.chomp.capitalize
+    option = gets.chomp
     if option == "1"
       menu
     else
@@ -232,6 +234,8 @@ def handle_tasks(num)
   when 6
     update
   when 7
+    liftoff
+  when 8
     exit
   end
 
@@ -314,9 +318,51 @@ def update
       country = gets.chomp
       pilot.update(country_of_origin: country)
     end
-    
     menu
+end
 
+def liftoff
+  puts '
+           !
+           !
+           ^
+          / \
+         /___\
+        |=   =|
+        |     |
+        |     |
+        |     |
+        |     |
+        |     |
+        |     |
+        |     |
+        |     |
+        |     |
+       /|##!##|\
+      / |##!##| \
+     /  |##!##|  \
+    |  / ^ | ^ \  |
+    | /  ( | )  \ |
+    |/   ( | )   \|
+        ((   ))
+        (( : ))
+        (( : ))
+        ((   ))
+        ((   ))
+        (     )
+           .
+           .
+           .
+  '
+  15.times do 
+    puts ''
+    sleep(0.3)
+  end
+  45.times do 
+    puts ''
+    sleep(0.1)
+  end
+  menu
 end
 
 
