@@ -4,15 +4,19 @@ class Mission < ActiveRecord::Base
 
   def missionInfo
 
-    "Destination: #{self.destination}
-    Launch Date: #{self.launch_date}
-    Total Distance: #{self.total_distance}
-    Spacecraft: #{self.spacecraft.name}"
+    puts "\n\tDestination: #{self.destination}
+        Launch Date: #{self.launch_date}
+        Total Distance: #{self.total_distance}
+        Spacecraft: #{self.spacecraft.name}"
 
   end
 
   def stdInfo
     "Mission Name: #{self.name}"
+  end
+
+  def to_millions(number)
+
   end
 
 end

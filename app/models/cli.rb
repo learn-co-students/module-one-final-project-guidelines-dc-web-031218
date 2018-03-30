@@ -26,16 +26,16 @@ def person(gender, country_of_origin)
                 |  |  |
                 |  |  |
                 |  |  |
-           dp   |  |  |
+                |  |  |
                 )  |  (
               .oooO Oooo.
       '
 
 
   when "F"
-    puts '           _____
-    _._      |     |
-  .:   :.    | '+country_of_origin+' |
+    puts '             _____
+    _._     |     |
+  .:   :.   | '+country_of_origin+' |
  / //\\\ \   |_____|
 ( ( -\- ) )     |
  :-\_=_/-:      /)
@@ -166,6 +166,7 @@ def start_up
 end
 
 def greeting
+  system "clear"
   puts '    __  ____           _                ______            __             __
    /  |/  (_)_________(_)___  ____     / ____/___  ____  / /__________  / /
   / /|_/ / / ___/ ___/ / __ \/ __ \   / /   / __ \/ __ \/ __/ ___/ __ \/ /
@@ -176,7 +177,7 @@ def greeting
 end
 
 def menu
-  available_choices = [1,2,3,4,5,6,7,8]
+  available_choices = [1,2,3,4,5,6,7,8,9]
   choice = 0
   while !available_choices.include?(choice)
     display_options
@@ -199,19 +200,26 @@ def display_list
     5. Fire a Pilot
     6. Update Pilot Info
     7. Watch Shuttle Launch
-    8. Exit\n"
+    8. Take a journey through space
+    9. Exit\n"
+  puts ""
 end
 
 def handle_tasks(num)
   case num
   when 1
+    puts ""
     puts Pilot.all.map{|i| i.name}
+    puts ""
     puts "Type name of pilot to see bio or type 1 go back to main screen."
+    puts ""
     option = gets.chomp.capitalize
     if option == "1"
       menu
     else
+      system "clear"
       pilotBio(option)
+      sleep(1.5)
       menu
     end
   when 2
@@ -236,6 +244,9 @@ def handle_tasks(num)
   when 7
     liftoff
   when 8
+    journey_through_space
+    menu
+  when 9
     exit
   end
 
@@ -246,7 +257,8 @@ def pilotBio(name)
   puts"  Name: #{bioName.name}
   Country of Origin: #{bioName.country_of_origin}
   Age: #{bioName.age}
-  Missions: #{bioName.missions.map{|m| m.missionInfo}}"
+  Missions: "
+  bioName.missions.each{|m| m.missionInfo}
   profile(name)
 end
 
@@ -281,13 +293,11 @@ end
 def spaceImage(option)
   ship = Spacecraft.find_by(name: option)
   case ship.max_capacity
-
   when (1..4)
     smallSpaceship
   when (4..7)
     mediumSpaceship
   when (7..20)
-    #bigShip
     largeSpaceship
   end
   menu
@@ -314,7 +324,7 @@ def update
       gender = gets.chomp
       pilot.update(gender: gender)
     when "country"
-      puts "What country is the pilot from?" 
+      puts "What country is the pilot from?"
       country = gets.chomp
       pilot.update(country_of_origin: country)
     end
@@ -354,18 +364,138 @@ def liftoff
            .
            .
   '
-  15.times do 
+  15.times do
     puts ''
     sleep(0.3)
   end
-  45.times do 
+  45.times do
     puts ''
     sleep(0.1)
   end
   menu
 end
 
+def journey_through_space
+  stars
+  sleep(0.3)
+  saturn
+  sleep(0.3)
+
+  stars
+
+  rocket
+  sleep(0.7)
+  stars
+  planet1
+  stars
+  little_stars
+  stars
+
+end
+
+
+#Journey through space images
+def rocket
+  puts '.                  .                         .
+      .         ,
+   .               .                 .                   .            .
+     .                          ,
+      .                .  /\
+                     .   (  )                       .        .
+                         (  ).                        .
+   .                    /|/\|\       .                     ,
+        .              /_||||_\
+       .                     .
+'
+
+end
 
 
 
+def saturn
+puts '               ~+
 
+      .            *       +
+  .      .          .                    |
+                  ()    .-.,="``"=.    - o -
+        .                (=/_       \    |        .       .       .
+                      *   |  *=._    |
+  .       .      .         \     `=. )        *           .
+                         .   \=.__.= `=      *
+      .          .    +                         +              .
+                    O      *        *       .                .'
+
+
+end
+
+def stars
+  puts '               .                                            .
+     *   .                  .              .        .   *          .
+  .         . '
+  sleep(0.3)
+  puts'                    .       .           .      .        .
+        o                             .                   .
+         .              .                  .           .
+               .
+                 .          .         '
+  sleep(0.3)
+  puts'        ,                ,    ,
+ .                  .                         .
+      .         ,
+   .               .                 .                   .            .
+     .                          ,       '
+  sleep(0.3)
+  puts'      .                .
+                     .                              .        .
+                             .                        .
+   .                               .                     ,
+        .          '
+  sleep(0.3)
+  puts'       .                     .
+      .               .                             ,     '
+  sleep(0.3)
+  puts'  .
+          .          .                    .             .          ,'
+
+end
+
+def planet1
+  puts '     .                          ,             .                .
+                 #\##\#      .                              .        .
+               #  #O##\###                .                        .
+     .        #*#  #\##\###                       .                     ,
+          .   ##*#  #\##\##               .                     .
+        .      ##*#  #o##\#         .                             ,       .
+            .     *#  #\#     .                    .             .          ,'
+end
+
+def little_stars
+  puts '               .            |                                .
+     *   .                  .     --o--       .        .   *          .
+  .         .                       |'
+  sleep(0.3)
+  puts'                    .       .           .      .  |      .
+        o                             .                 -o-.
+         .              .                  .             |.
+               .
+                 .          .         '
+  sleep(0.3)
+  puts'        ,                ,    ,
+ .                  .         oo                .
+      .         ,            0000
+   .               .          oo       .                   .            .
+     .                          ,       '
+  sleep(0.3)
+  puts'      .                .
+                     .                              .        .
+                             .                  ****      .
+   .                               .           ******          ,
+        .                                       ****'
+  sleep(0.3)
+  puts'       .                     .
+      .               .                             ,     '
+  sleep(0.3)
+  puts'  .
+          .          .                    .             .          ,'
+
+end
